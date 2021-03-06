@@ -80,14 +80,14 @@ func main() {
 	
 	fmt.Printf("Choose:\n1.Sequential\n2.Concurrent\n3.Parallel\n")
 	
-	// use following to read string
-	// text, _ := reader.ReadString('\n')
-
+	
 	// use following to read a character
 	char, _, err := reader.ReadRune()
 	if err != nil{
 		fmt.Println("Error occurred: ", err)
 	}
+	//clear the input stream
+	reader.Reset(os.Stdin)
 
 	switch(char){
 	case '1':
@@ -120,5 +120,4 @@ func main() {
 	defer trace.Stop()
 	
 	runGoRoutine(rt)
-
 }
