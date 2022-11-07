@@ -9,4 +9,4 @@ steps:
 2. Select execution mode
 3. View result using,
 
-- ` go tool trace <trace-file-name>.out
+- `go tool trace <trace-file-name>.out`
