@@ -12,57 +12,57 @@ import (
 )
 
 type RunType string
-const(
+
+const (
 	Sequential RunType = "Sequential"
 	Concurrent RunType = "Concurrent"
-	Parallel RunType = "Parallel"
+	Parallel   RunType = "Parallel"
 )
-
 
 func worker(id int, wg *sync.WaitGroup) {
 
-    defer wg.Done()
+	defer wg.Done()
 
-    fmt.Printf("Worker %d starting\n", id)
+	fmt.Printf("Worker %d starting\n", id)
 
-    for number := 1; number < math.MaxInt32; number++ {            
-    }
-    fmt.Printf("Worker %d done\n", id)
+	for number := math.MinInt32; number < math.MaxInt32; number++ {
+	}
+	fmt.Printf("Worker %d done\n", id)
 }
 
-func runGoRoutine(rt RunType){
-	
-	if rt == Sequential{
-		for i := 1; i <= 5; i++ {        
-			for number := 1; number < math.MaxInt32; number++ {            
+func runGoRoutine(rt RunType) {
+
+	if rt == Sequential {
+		for i := 1; i <= 5; i++ {
+			for number := math.MinInt32; number < math.MaxInt32; number++ {
 			}
 		}
 		return
 	}
 
-	if rt == Parallel{
-		runtime.GOMAXPROCS(4)
+	if rt == Parallel {
+		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
 
-	if rt == Concurrent{
+	if rt == Concurrent {
 		runtime.GOMAXPROCS(1)
 	}
 
-    var wg sync.WaitGroup
+	var wg sync.WaitGroup
 
-    for i := 1; i <= 5; i++ {
-        wg.Add(1)
-        go worker(i, &wg)
-    }
+	for i := 1; i <= 5; i++ {
+		wg.Add(1)
+		go worker(i, &wg)
+	}
 
 	fmt.Println("Waiting To Finish")
-    wg.Wait()
+	wg.Wait()
 
-    fmt.Println("\nTerminating Program")
+	fmt.Println("\nTerminating Program")
 }
 
-func getFileName(rt RunType) string{
-	switch(rt){
+func getFileName(rt RunType) string {
+	switch rt {
 	case Sequential:
 		return "trace-sequential.out"
 	case Concurrent:
@@ -74,22 +74,21 @@ func getFileName(rt RunType) string{
 }
 
 func main() {
-	
+
 	reader := bufio.NewReader(os.Stdin)
 	var rt RunType
-	
+
 	fmt.Printf("Choose:\n1.Sequential\n2.Concurrent\n3.Parallel\n")
-	
-	
+
 	// use following to read a character
 	char, _, err := reader.ReadRune()
-	if err != nil{
+	if err != nil {
 		fmt.Println("Error occurred: ", err)
 	}
 	//clear the input stream
 	reader.Reset(os.Stdin)
 
-	switch(char){
+	switch char {
 	case '1':
 		rt = Sequential
 	case '2':
@@ -118,6 +117,6 @@ func main() {
 		log.Fatalf("failed to start trace: %v", err)
 	}
 	defer trace.Stop()
-	
+
 	runGoRoutine(rt)
 }
