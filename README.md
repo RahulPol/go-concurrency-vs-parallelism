@@ -7,6 +7,6 @@ steps:
 - ` go run .`
 
 2. Select execution mode
-3. View result using,
+3. View result using following command
 
 - `go tool trace <trace-file-name>.out`
