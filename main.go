@@ -119,4 +119,22 @@ func main() {
 	defer trace.Stop()
 
 	runGoRoutine(rt)
+
+	// Basics of multithreading
+	// Multithreading
+	// startV1()
+	// startV2()
+	// startV3()
+	// startV4()
+	// startV5()
+	// startV6()
+	// startV7()
+	// startV8()
+	// startV9()
+	// startV10()
+	// tricky()
+	// buffered()
+	// trickyV2()
+	// selectStatement()
+	// workerPatternV2()
 }
